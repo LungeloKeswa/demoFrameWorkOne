@@ -21,10 +21,12 @@ public class LoginPage {
         driver.findElement(usernameTextBox).sendKeys(username);
     }
 
+    // second function
     public void passwordTextBox(String password) {
         driver.findElement(passwordTextBox).sendKeys(password);
     }
 
+    // third function
     public void loginButton() {
         driver.findElement(loginButton).click();
     }
