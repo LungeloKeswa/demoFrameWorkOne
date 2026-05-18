@@ -3,6 +3,7 @@ package utils;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Log {
 
@@ -15,6 +16,9 @@ public class Log {
 
             // create a log file
             FileHandler fileHandler = new FileHandler("test-out.log", true);
+
+            // format log nicely
+            fileHandler.setFormatter(new SimpleFormatter());
 
             // attach file to logger
             loggerTwo.addHandler(fileHandler);
