@@ -1,34 +1,37 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage {
 
     private WebDriver driver;
+    private WebDriverWait wait;
 
-    private By usernameTextBox = By.name("username");
-    private By passwordTextBox = By.name("password");
-    private By loginButton = By.xpath("//button[normalize-space()='Login']");
+    private By username = By.name("username");
+    private By password = By.name("password");
+    private By loginBtn = By.xpath("//button[normalize-space()='Login']");
 
-    // Constructor is always called by default
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // first function
-    public void usernameTextBox(String username) {
-        driver.findElement(usernameTextBox).sendKeys(username);
+    public void usernameTextBox(String user) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(username))
+                .sendKeys(user);
     }
 
-    // second function
-    public void passwordTextBox(String password) {
-        driver.findElement(passwordTextBox).sendKeys(password);
+    public void passwordTextBox(String pass) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(password))
+                .sendKeys(pass);
     }
 
-    // third function
     public void loginButton() {
-        driver.findElement(loginButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginBtn))
+                .click();
     }
-
 }
