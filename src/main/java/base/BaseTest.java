@@ -46,6 +46,7 @@ public class BaseTest {
         driver.manage().window().setSize(new Dimension(1920, 1080));
         // Better stability than only implicit wait
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
 
         Log.info("Driver initialized");
         driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");

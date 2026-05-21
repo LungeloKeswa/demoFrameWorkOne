@@ -1,7 +1,10 @@
 package tests;
 
 import base.BaseTest;
+import lombok.Data;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.ExcelUtils;
@@ -27,11 +30,25 @@ public class LoginTest extends BaseTest {
         return data;
     }
 
-    @Test(dataProvider = "LoginData")
+    /// if there is not much data and there won't be to many changes
+    @DataProvider(name="LoginData2")
+    public Object[][] getData() {
+
+        return new Object[][]{
+                {"user1", "pass1"},
+                {"user2", "pass2"},
+                {"user3", "pass3"},
+                {"Admin", "admin123"}
+        };
+    }
+
+    /////@Test(dataProvider = "LoginData2")
+    @Test
+    @Parameters({"username", "password"})
     public void testValidLogin( String username, String password) {
 
         Log.info("Starting Login Test...");
-        test = ExtentReportManager.createTest("Login Test Report");
+        test = ExtentReportManager.createTest("Login Test - "+username);
 
         LoginPage loginPage = new LoginPage(driver);
         test.info("Entering username and password");
@@ -50,5 +67,9 @@ public class LoginTest extends BaseTest {
         Log.info("Verifying page title...");
 
         System.out.println("Page Title: " + actualTitle);
+
+        Assert.assertEquals(actualTitle, expectedTitle, "Page title is incorrect.");
+
     }
+
 }
