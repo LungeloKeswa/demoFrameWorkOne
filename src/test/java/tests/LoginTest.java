@@ -1,7 +1,6 @@
 package tests;
 
 import base.BaseTest;
-import lombok.Data;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
@@ -23,8 +22,8 @@ public class LoginTest extends BaseTest {
         Object[][] data = new Object[rowCount-1][2];
 
         for (int i = 1; i<rowCount; i++) {
-            data[i-1][0] = ExcelUtils.getCellValue(i, 0); /// get username
-            data[i-1][1] = ExcelUtils.getCellValue(i, 1); /// get password
+            data[i-1][0] = ExcelUtils.getCellValue(i, 0); // get username
+            data[i-1][1] = ExcelUtils.getCellValue(i, 1); // get password
         }
         ExcelUtils.closeExcel();
         return data;
