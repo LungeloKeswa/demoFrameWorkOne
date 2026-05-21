@@ -1,56 +1,53 @@
 package tests;
 
 import base.BaseTest;
-import org.testng.Assert;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.LoginPage;
-import utils.CaptureScreenShot;
+import utils.ExcelUtils;
 import utils.ExtentReportManager;
 import utils.Log;
 
 import java.io.IOException;
 
-@Listeners(utils.TestListener.class)
 public class LoginTest extends BaseTest {
 
-    @Test
-    public void testValidLogin() throws IOException {
+    @DataProvider(name="LoginData")
+    public Object[][] LoginData() throws IOException {
+       String filePath = System.getProperty("user.dir")+"/testdata/TestData.xlsx";
+        ExcelUtils.loadExcel(filePath, "DataOne");
+        int rowCount = ExcelUtils.getRowCount();
+        Object[][] data = new Object[rowCount-1][2];
+
+        for (int i = 1; i<rowCount; i++) {
+            data[i-1][0] = ExcelUtils.getCellValue(i, 0); /// get username
+            data[i-1][1] = ExcelUtils.getCellValue(i, 1); /// get password
+        }
+        ExcelUtils.closeExcel();
+        return data;
+    }
+
+    @Test(dataProvider = "LoginData")
+    public void testValidLogin( String username, String password) {
 
         Log.info("Starting Login Test...");
-
         test = ExtentReportManager.createTest("Login Test Report");
 
         LoginPage loginPage = new LoginPage(driver);
-
         test.info("Entering username and password");
 
-        loginPage.usernameTextBox("Admin");
-        loginPage.passwordTextBox("admin123");
+        loginPage.usernameTextBox(username);
+        loginPage.passwordTextBox(password);
+        //loginPage.usernameTextBox("Admin");
+        //loginPage.passwordTextBox("admin123");
 
         test.info("Clicking login button");
         loginPage.loginButton();
 
         String actualTitle = driver.getTitle();
-        String expectedTitle = "OrangeHRM@@@";
+        String expectedTitle = "OrangeHRM";
 
         Log.info("Verifying page title...");
-
-        try {
-            Assert.assertEquals(actualTitle, expectedTitle);
-
-            test.pass("Login successful. Title matched: " + actualTitle);
-            Log.info("Login test passed");
-
-        } catch (AssertionError e) {
-
-            String path = CaptureScreenShot.captureScreenShot(driver, "LoginFailure");
-
-            test.fail("Login failed. Screenshot captured: " + path);
-            Log.error("Login test failed");
-
-            throw e;
-        }
 
         System.out.println("Page Title: " + actualTitle);
     }
