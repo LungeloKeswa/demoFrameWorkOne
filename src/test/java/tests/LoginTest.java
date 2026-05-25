@@ -43,19 +43,20 @@ public class LoginTest extends BaseTest {
 
     /////@Test(dataProvider = "LoginData2")
     @Test
-    @Parameters({"username", "password"})
-    public void testValidLogin( String username, String password) {
-
+   // @Parameters({"username", "password"})
+   // public void testValidLogin( String username, String password) {
+    public void testValidLogin() {
         Log.info("Starting Login Test...");
-        test = ExtentReportManager.createTest("Login Test - "+username);
+        //test = ExtentReportManager.createTest("Login Test - "+username);
+        test = ExtentReportManager.createTest("Login Test - ");
 
         LoginPage loginPage = new LoginPage(driver);
         test.info("Entering username and password");
 
-        loginPage.usernameTextBox(username);
-        loginPage.passwordTextBox(password);
-        //loginPage.usernameTextBox("Admin");
-        //loginPage.passwordTextBox("admin123");
+//        loginPage.usernameTextBox(username);
+//        loginPage.passwordTextBox(password);
+        loginPage.usernameTextBox("Admin");
+        loginPage.passwordTextBox("admin123");
 
         test.info("Clicking login button");
         loginPage.loginButton();

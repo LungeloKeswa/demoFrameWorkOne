@@ -17,13 +17,14 @@ public class ExtentReportManager {
     // class variables or class instances
     private static ExtentReports extent;
     private static ExtentTest test;
+    public static String reportPath;
 
     // get report instance
     public static ExtentReports getReportInstance(){
 
         if(extent==null){
             String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
-            String reportPath = "reports/ExtentReport_"+timestamp+".html";
+            reportPath = "reports/ExtentReport_"+timestamp+".html";
             ExtentSparkReporter reporter = new ExtentSparkReporter(reportPath);
 
             reporter.config().setDocumentTitle("Automation Test Report");

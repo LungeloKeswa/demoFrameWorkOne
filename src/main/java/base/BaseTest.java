@@ -11,6 +11,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import utils.EmailUtils;
 import utils.ExtentReportManager;
 import utils.Log;
 
@@ -34,6 +35,8 @@ public class BaseTest {
     @AfterSuite
     public void teardownRemote() {
         extent.flush();
+        String reportPath = ExtentReportManager.reportPath;
+        EmailUtils.sendTestReport(reportPath);
     }
 
     /// function
@@ -58,7 +61,7 @@ public class BaseTest {
 
         if (result.getStatus() == ITestResult.FAILURE) {
             String screenshotPath = ExtentReportManager.captureScreenShot(driver, "LoginFailure");
-            System.out.println("ScreenShot Captues, PATH :" +screenshotPath);
+            System.out.println("ScreenShot Captured, PATH :" +screenshotPath);
             test.fail("Test Failed Screenshot attached: ",
                     MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
         }

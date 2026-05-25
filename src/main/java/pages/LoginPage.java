@@ -30,7 +30,6 @@ public class LoginPage {
     @FindBy(xpath="//button[normalize-space()='Login']")
     WebElement loginButtonBox;
 
-
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
