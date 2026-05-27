@@ -62,7 +62,7 @@ public class LoginTest extends BaseTest {
         loginPage.loginButton();
 
         String actualTitle = driver.getTitle();
-        String expectedTitle = "OrangeHRM";
+        String expectedTitle = "OrangeHRM000";
 
         Log.info("Verifying page title...");
 
